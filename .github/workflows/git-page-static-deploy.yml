@@ -3,7 +3,8 @@ name: Deploy static content to Pages
 
 on:
   pull_request:
-    branches: ["master"]
+    branches:
+      - "*"
 
   # Actions 탭에서 수동으로 워크플로우를 실행할 수 있도록 구성
   workflow_dispatch:
@@ -33,13 +34,10 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # dist 디렉터리 업로드
-          path: "./dist"
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACCESS_TOKEN }}
+          publish_branch: pr-${{ github.event.pull_request.number }}
+          publish_dir: dist
