@@ -14,11 +14,6 @@ permissions:
   pages: write
   id-token: write
 
-# 동시에 하나의 배포만 허용하도록 구성
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
 jobs:
   # 단순히 배포만 수행하기에 하나의 잡으로만 구성
   deploy:
