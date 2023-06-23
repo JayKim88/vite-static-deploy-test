@@ -3,7 +3,7 @@ name: Deploy static content to Pages
 
 on:
   pull_request:
-    branches: ["master"]
+    types: [opened, reopened, edited]
 
   # Actions 탭에서 수동으로 워크플로우를 실행할 수 있도록 구성
   workflow_dispatch:
@@ -13,6 +13,11 @@ permissions:
   contents: read
   pages: write
   id-token: write
+
+# 동시에 하나의 배포만 허용하도록 구성
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   # 단순히 배포만 수행하기에 하나의 잡으로만 구성
